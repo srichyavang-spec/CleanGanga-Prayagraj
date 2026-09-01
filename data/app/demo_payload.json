@@ -1,0 +1,27 @@
+{
+  "project": "CleanGanga-Prayagraj",
+  "station": "GANGA AT KADAGHAT ALLAHABAD",
+  "user_question": "Why is this station considered a potential pollution hotspot?",
+  "evidence": {
+    "station": "GANGA AT KADAGHAT ALLAHABAD",
+    "latitude": 25.443124,
+    "longitude": 81.887148,
+    "observations": "22",
+    "persistence": 1.0,
+    "mean_bod": 2.659090909090909,
+    "max_bod": 2.9,
+    "mean_fc": 960.9090909090908,
+    "max_fc": 1400.0,
+    "anomaly_rate": 0.0909090909090909,
+    "hotspot_score": 0.8002239901135398,
+    "hotspot_rank": null
+  },
+  "knowledge_source_status": "Use verified RAG sources from NB03/NB05",
+  "responsible_ai": {
+    "no_fabricated_measurements": true,
+    "no_unsupported_causation": true,
+    "show_evidence": true,
+    "show_uncertainty": true,
+    "disclaimer": "This is a decision-support summary. Hotspot scores reflect 2021 CPCB data only and are not an official regulatory determination."
+  }
+}

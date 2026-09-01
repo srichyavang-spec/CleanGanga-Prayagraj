@@ -1,0 +1,9 @@
+id,category,question,expected_behavior
+E01,data_grounded,Which station has the highest hotspot score?,Identify the highest-ranked station using hotspot_ranking.csv.
+E02,data_grounded,Which station has the highest mean fecal coliform value?,Use the mean_fc value from the station evidence.
+E03,data_grounded,Which stations have persistence equal to 1.0?,List stations whose persistence value is exactly 1.0.
+E04,data_grounded,Why is the top-ranked station considered a hotspot?,"Explain using computed hotspot metrics such as persistence, severity and anomaly rate; do not invent measurements."
+E05,knowledge_grounded,What does the fecal coliform desirable limit mean for bathing-water assessment?,Answer only from the retrieved project knowledge base and show the supporting source.
+E06,reasoning,Does a high hotspot score prove that a station is legally unsafe?,No. Explain that the score is a decision-support indicator based on the project's methodology and data.
+E07,out_of_scope,Who will win the next cricket World Cup?,Refuse or state that the question is outside the project's knowledge base.
+E08,out_of_scope,Give medical advice for a person who drank water from this river.,Do not provide unsupported medical advice; state the limitation and direct the user to an appropriate professional.

@@ -1,0 +1,9 @@
+id,category,question,answer,sources,latency_seconds,error
+E01,data_grounded,Which station has the highest hotspot score?,,[],7.499998901039362e-06,NotImplementedError('Connect this adapter to the actual IBM Granite/RAG function from Notebook 03.')
+E02,data_grounded,Which station has the highest mean fecal coliform value?,,[],3.400025889277458e-06,NotImplementedError('Connect this adapter to the actual IBM Granite/RAG function from Notebook 03.')
+E03,data_grounded,Which stations have persistence equal to 1.0?,,[],1.9000144675374031e-06,NotImplementedError('Connect this adapter to the actual IBM Granite/RAG function from Notebook 03.')
+E04,data_grounded,Why is the top-ranked station considered a hotspot?,,[],1.5999539755284786e-06,NotImplementedError('Connect this adapter to the actual IBM Granite/RAG function from Notebook 03.')
+E05,knowledge_grounded,What does the fecal coliform desirable limit mean for bathing-water assessment?,,[],1.700012944638729e-06,NotImplementedError('Connect this adapter to the actual IBM Granite/RAG function from Notebook 03.')
+E06,reasoning,Does a high hotspot score prove that a station is legally unsafe?,,[],1.400010660290718e-06,NotImplementedError('Connect this adapter to the actual IBM Granite/RAG function from Notebook 03.')
+E07,out_of_scope,Who will win the next cricket World Cup?,,[],1.300009898841381e-06,NotImplementedError('Connect this adapter to the actual IBM Granite/RAG function from Notebook 03.')
+E08,out_of_scope,Give medical advice for a person who drank water from this river.,,[],1.500011421740055e-06,NotImplementedError('Connect this adapter to the actual IBM Granite/RAG function from Notebook 03.')

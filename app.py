@@ -1,9 +1,16 @@
 from pathlib import Path
-import json
+import os
+import re
 
+import numpy as np
 import pandas as pd
 import streamlit as st
+from dotenv import load_dotenv
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 
+# Load local environment variables without exposing secrets in the code.
+load_dotenv()
 
 # ============================================================
 # 1. PAGE CONFIGURATION
@@ -12,484 +19,744 @@ import streamlit as st
 st.set_page_config(
     page_title="CleanGanga – Prayagraj",
     page_icon="🌊",
-    layout="wide"
+    layout="wide",
 )
 
-
 # ============================================================
-# 2. PATHS
+# 2. PROJECT PATHS
 # ============================================================
 
 PROJECT_ROOT = Path(__file__).resolve().parent
 DATA_DIR = PROJECT_ROOT / "data"
-APP_DATA_DIR = DATA_DIR / "app"
+APP_DIR = DATA_DIR / "app"
+KNOWLEDGE_DIR = DATA_DIR / "knowledge_base"
 
+ASSESSMENT_FILE = DATA_DIR / "prayagraj_assessment.csv"
 STATION_FILE = DATA_DIR / "station_summary.csv"
 HOTSPOT_FILE = DATA_DIR / "hotspot_ranking.csv"
-ASSESSMENT_FILE = DATA_DIR / "prayagraj_assessment.csv"
-PROTOTYPE_FILE = DATA_DIR / "prototype_response.json"
 
+APP_STATION_FILE = APP_DIR / "station_dashboard.csv"
+
+# Prefer the NB06 UI-ready table when available.
+# Otherwise use the original NB02 station summary + hotspot ranking.
 
 # ============================================================
-# 3. LOAD DATA
+# 3. IBM GRANITE CONFIGURATION
+# ============================================================
+
+WATSONX_APIKEY = os.getenv("WATSONX_APIKEY")
+WATSONX_PROJECT_ID = os.getenv("WATSONX_PROJECT_ID")
+WATSONX_URL = os.getenv(
+    "WATSONX_URL",
+    "https://us-south.ml.cloud.ibm.com",
+)
+GRANITE_MODEL_ID = os.getenv(
+    "GRANITE_MODEL_ID",
+    "ibm/granite-3-3-8b-instruct",
+)
+
+IBM_GRANITE_READY = bool(
+    WATSONX_APIKEY and WATSONX_PROJECT_ID
+)
+
+# ============================================================
+# 4. LOAD PROJECT DATA
 # ============================================================
 
 @st.cache_data
-def load_data():
+def load_project_data():
+    if not STATION_FILE.exists():
+        raise FileNotFoundError(
+            f"Missing required file: {STATION_FILE}"
+        )
+
+    if not HOTSPOT_FILE.exists():
+        raise FileNotFoundError(
+            f"Missing required file: {HOTSPOT_FILE}"
+        )
 
     station_df = pd.read_csv(STATION_FILE)
     hotspot_df = pd.read_csv(HOTSPOT_FILE)
 
     assessment_df = None
-
     if ASSESSMENT_FILE.exists():
         assessment_df = pd.read_csv(ASSESSMENT_FILE)
 
     return station_df, hotspot_df, assessment_df
 
 
-@st.cache_data
-def load_prototype_response():
-
-    if not PROTOTYPE_FILE.exists():
-        return None
-
-    try:
-        with open(PROTOTYPE_FILE, "r", encoding="utf-8") as file:
-            return json.load(file)
-
-    except Exception:
-        return None
-
-
-# ============================================================
-# 4. CHECK FILES
-# ============================================================
-
-if not STATION_FILE.exists() or not HOTSPOT_FILE.exists():
-
-    st.error(
-        "Required project data files are missing. "
-        "Please make sure the data folder contains "
-        "station_summary.csv and hotspot_ranking.csv."
-    )
-
+try:
+    station_df, hotspot_df, assessment_df = load_project_data()
+except Exception as exc:
+    st.error(str(exc))
     st.stop()
 
-
-station_df, hotspot_df, assessment_df = load_data()
-prototype_response = load_prototype_response()
-
-
 # ============================================================
-# 5. IDENTIFY HOTSPOT SCORE COLUMN
+# 5. NORMALIZE/VALIDATE HOTSPOT DATA
 # ============================================================
 
 if "hotspot_score_baseline" in hotspot_df.columns:
-
     score_column = "hotspot_score_baseline"
-
 elif "hotspot_score" in hotspot_df.columns:
-
     score_column = "hotspot_score"
-
 else:
-
-    st.error("Hotspot score column was not found.")
+    st.error(
+        "The hotspot ranking file does not contain "
+        "'hotspot_score_baseline' or 'hotspot_score'."
+    )
     st.stop()
+
+if "Station" not in station_df.columns:
+    st.error("station_summary.csv must contain a 'Station' column.")
+    st.stop()
+
+if "Station" not in hotspot_df.columns:
+    st.error("hotspot_ranking.csv must contain a 'Station' column.")
+    st.stop()
+
+# ============================================================
+# 6. RAG KNOWLEDGE INDEX
+# ============================================================
+
+@st.cache_resource
+def build_rag_index():
+    if not KNOWLEDGE_DIR.exists():
+        return None, None, []
+
+    files = sorted(
+        list(KNOWLEDGE_DIR.glob("*.txt"))
+        + list(KNOWLEDGE_DIR.glob("*.md"))
+    )
+
+    chunks = []
+
+    def chunk_text(text, chunk_size=1200, overlap=200):
+        text = re.sub(r"\s+", " ", text).strip()
+
+        if not text:
+            return []
+
+        result = []
+        start = 0
+
+        while start < len(text):
+            end = min(start + chunk_size, len(text))
+            result.append(text[start:end])
+
+            if end == len(text):
+                break
+
+            start = max(0, end - overlap)
+
+        return result
+
+    for path in files:
+        text = path.read_text(
+            encoding="utf-8",
+            errors="ignore",
+        )
+
+        for chunk_id, chunk in enumerate(chunk_text(text)):
+            chunks.append(
+                {
+                    "source": path.name,
+                    "chunk_id": chunk_id,
+                    "text": chunk,
+                }
+            )
+
+    if not chunks:
+        return None, None, []
+
+    vectorizer = TfidfVectorizer(
+        stop_words="english",
+        ngram_range=(1, 2),
+    )
+
+    matrix = vectorizer.fit_transform(
+        [item["text"] for item in chunks]
+    )
+
+    return vectorizer, matrix, chunks
+
+
+vectorizer, knowledge_matrix, knowledge_chunks = build_rag_index()
+
+
+def retrieve_knowledge(query, top_k=3):
+    if (
+        vectorizer is None
+        or knowledge_matrix is None
+        or not knowledge_chunks
+    ):
+        return []
+
+    query_vector = vectorizer.transform([query])
+
+    scores = cosine_similarity(
+        query_vector,
+        knowledge_matrix,
+    )[0]
+
+    indices = np.argsort(scores)[::-1][:top_k]
+
+    return [
+        {
+            **knowledge_chunks[i],
+            "score": float(scores[i]),
+        }
+        for i in indices
+    ]
 
 
 # ============================================================
-# 6. PAGE HEADER
+# 7. IBM GRANITE ADAPTER
+# ============================================================
+
+@st.cache_resource
+def get_granite_model():
+    if not IBM_GRANITE_READY:
+        return None
+
+    try:
+        from ibm_watsonx_ai import Credentials
+        from ibm_watsonx_ai.foundation_models import ModelInference
+
+        credentials = Credentials(
+            url=WATSONX_URL,
+            api_key=WATSONX_APIKEY,
+        )
+
+        return ModelInference(
+            model_id=GRANITE_MODEL_ID,
+            credentials=credentials,
+            project_id=WATSONX_PROJECT_ID,
+            params={
+                "max_new_tokens": 350,
+                "temperature": 0.2,
+            },
+        )
+
+    except Exception as exc:
+        st.warning(
+            "IBM Granite could not be initialized. "
+            f"Reason: {type(exc).__name__}"
+        )
+        return None
+
+
+granite_model = get_granite_model()
+
+
+# ============================================================
+# 8. STATION EVIDENCE
+# ============================================================
+
+def get_station_evidence(station_name):
+    station_match = station_df[
+        station_df["Station"] == station_name
+    ]
+
+    hotspot_match = hotspot_df[
+        hotspot_df["Station"] == station_name
+    ]
+
+    if station_match.empty:
+        return None
+
+    station_row = station_match.iloc[0]
+    hotspot_row = (
+        hotspot_match.iloc[0]
+        if not hotspot_match.empty
+        else None
+    )
+
+    def value(row, columns):
+        if row is None:
+            return None
+
+        for column in columns:
+            if column in row.index:
+                item = row[column]
+
+                if pd.isna(item):
+                    return None
+
+                return item
+
+        return None
+
+    return {
+        "station": station_name,
+        "latitude": value(
+            station_row,
+            ["latitude", "Latitude"],
+        ),
+        "longitude": value(
+            station_row,
+            ["longitude", "Longitude"],
+        ),
+        "observations": value(
+            station_row,
+            ["observations"],
+        ),
+        "persistence": value(
+            station_row,
+            ["persistence"],
+        ),
+        "mean_bod": value(
+            station_row,
+            ["mean_bod"],
+        ),
+        "max_bod": value(
+            station_row,
+            ["max_bod"],
+        ),
+        "mean_fc": value(
+            station_row,
+            ["mean_fc"],
+        ),
+        "max_fc": value(
+            station_row,
+            ["max_fc"],
+        ),
+        "anomaly_rate": value(
+            station_row,
+            ["anomaly_rate"],
+        ),
+        "hotspot_score": value(
+            hotspot_row,
+            [score_column],
+        ),
+        "hotspot_rank": value(
+            hotspot_row,
+            ["rank"],
+        ),
+    }
+
+
+# ============================================================
+# 9. GROUNDED PROMPT
+# ============================================================
+
+def build_grounded_prompt(
+    evidence,
+    user_question,
+    retrieved_docs,
+):
+    metric_names = [
+        "observations",
+        "persistence",
+        "mean_bod",
+        "max_bod",
+        "mean_fc",
+        "max_fc",
+        "anomaly_rate",
+    ]
+
+    metric_lines = []
+
+    for name in metric_names:
+        value = evidence.get(name)
+
+        if value is not None:
+            metric_lines.append(
+                f"- {name}: {value}"
+            )
+
+    metrics = "\n".join(metric_lines)
+    if not metrics:
+        metrics = "- No additional station metrics available."
+
+    source_blocks = []
+
+    for doc in retrieved_docs:
+        source_blocks.append(
+            f"[Source: {doc['source']} | "
+            f"Chunk: {doc['chunk_id']}]\n"
+            f"{doc['text']}"
+        )
+
+    source_text = "\n\n".join(source_blocks)
+
+    if not source_text:
+        source_text = "No verified reference evidence was retrieved."
+
+    return f"""
+You are an environmental decision-support assistant
+for the CleanGanga-Prayagraj project.
+
+USER QUESTION:
+{user_question}
+
+PROJECT-COMPUTED EVIDENCE:
+
+Station: {evidence["station"]}
+Hotspot score: {evidence["hotspot_score"]}
+Hotspot rank: {evidence["hotspot_rank"]}
+
+Station metrics:
+{metrics}
+
+RETRIEVED REFERENCE EVIDENCE:
+
+{source_text}
+
+INSTRUCTIONS:
+
+1. Answer only from the supplied evidence.
+2. Clearly distinguish project-computed measurements from
+   retrieved reference information.
+3. Mention the retrieved source when using reference information.
+4. Never invent measurements, dates, sources, or causes.
+5. Do not claim a pollution source unless the supplied evidence
+   explicitly supports it.
+6. Do not claim causation.
+7. Do not present the hotspot score as an official regulatory
+   classification.
+8. Communicate uncertainty and limitations.
+9. If the evidence is insufficient, explicitly say so.
+10. Keep the answer concise and useful for decision support.
+
+Return a grounded explanation.
+""".strip()
+
+
+def generate_granite_response(prompt):
+    if granite_model is None:
+        return None
+
+    try:
+        return granite_model.generate_text(prompt=prompt)
+    except Exception as exc:
+        st.error(
+            "IBM Granite request failed: "
+            f"{type(exc).__name__}"
+        )
+        return None
+
+
+# ============================================================
+# 10. PAGE HEADER
 # ============================================================
 
 st.title("🌊 CleanGanga – Prayagraj")
-
-st.subheader(
-    "AI-Powered Water Quality Decision Support"
-)
+st.subheader("AI-Powered Water Quality Decision Support")
 
 st.write(
-    "Analyze water-quality evidence, identify potential pollution "
-    "hotspots, and generate grounded decision-support insights."
+    "Explore station-level water-quality evidence, identify "
+    "potential pollution hotspots, and ask grounded questions "
+    "using IBM Granite + RAG."
 )
 
 st.divider()
 
-
 # ============================================================
-# 7. DASHBOARD METRICS
+# 11. DASHBOARD
 # ============================================================
 
 station_count = hotspot_df["Station"].nunique()
 
-if assessment_df is not None:
-    observation_count = len(assessment_df)
-else:
-    observation_count = "N/A"
+observation_count = (
+    len(assessment_df)
+    if assessment_df is not None
+    else "N/A"
+)
 
-highest_score = pd.to_numeric(
+numeric_scores = pd.to_numeric(
     hotspot_df[score_column],
-    errors="coerce"
-).max()
+    errors="coerce",
+)
 
-highest_station = hotspot_df.loc[
-    hotspot_df[score_column].idxmax(),
-    "Station"
-]
+highest_score = numeric_scores.max()
 
+if numeric_scores.notna().any():
+    highest_station = hotspot_df.loc[
+        numeric_scores.idxmax(),
+        "Station",
+    ]
+else:
+    highest_station = "N/A"
 
 col1, col2, col3, col4 = st.columns(4)
 
 with col1:
-    st.metric(
-        "Stations Monitored",
-        station_count
-    )
+    st.metric("Stations Monitored", station_count)
 
 with col2:
-    st.metric(
-        "Observations",
-        observation_count
-    )
+    st.metric("Observations", observation_count)
 
 with col3:
     st.metric(
         "Highest Hotspot Score",
-        f"{highest_score:.2f}"
+        f"{highest_score:.2f}",
     )
 
 with col4:
     st.metric(
         "Top Hotspot",
-        str(highest_station)[:25]
+        str(highest_station)[:25],
     )
 
+# ============================================================
+# 12. HOTSPOT RANKING
+# ============================================================
 
 st.divider()
-
-
-# ============================================================
-# 8. HOTSPOT RANKING
-# ============================================================
-
 st.header("🔥 Pollution Hotspot Ranking")
 
-ranking_display = hotspot_df.copy()
+ranking = hotspot_df.copy()
 
-ranking_display = ranking_display.sort_values(
+ranking[score_column] = pd.to_numeric(
+    ranking[score_column],
+    errors="coerce",
+)
+
+ranking = ranking.sort_values(
     score_column,
-    ascending=False
+    ascending=False,
 )
 
 display_columns = ["Station", score_column]
 
-if "rank" in ranking_display.columns:
+if "rank" in ranking.columns:
     display_columns.insert(0, "rank")
 
-ranking_display = ranking_display[display_columns]
-
-ranking_display = ranking_display.rename(
+ranking_display = ranking[display_columns].rename(
     columns={
-        score_column: "Hotspot Score"
+        score_column: "Hotspot Score",
+        "rank": "Rank",
     }
 )
 
 st.dataframe(
     ranking_display,
     use_container_width=True,
-    hide_index=True
+    hide_index=True,
 )
 
-
 # ============================================================
-# 9. STATION SELECTION
+# 13. STATION ANALYSIS
 # ============================================================
 
 st.divider()
-
 st.header("📍 Station Analysis")
 
-station_names = hotspot_df["Station"].dropna().tolist()
+station_names = (
+    hotspot_df["Station"]
+    .dropna()
+    .astype(str)
+    .tolist()
+)
 
 selected_station = st.selectbox(
     "Select a monitoring station",
-    station_names
+    station_names,
 )
 
+evidence = get_station_evidence(selected_station)
 
-# ============================================================
-# 10. FIND SELECTED STATION
-# ============================================================
-
-station_match = station_df[
-    station_df["Station"] == selected_station
-]
-
-hotspot_match = hotspot_df[
-    hotspot_df["Station"] == selected_station
-]
-
-if station_match.empty:
-
+if evidence is None:
     st.warning(
-        "Detailed information for this station is not available."
+        "Detailed evidence for this station is unavailable."
     )
+    st.stop()
 
-else:
+# ============================================================
+# 14. EVIDENCE METRICS
+# ============================================================
 
-    station = station_match.iloc[0]
-    hotspot = hotspot_match.iloc[0]
+st.subheader("Water Quality Evidence")
 
+col1, col2, col3, col4 = st.columns(4)
 
-    # ========================================================
-    # 11. STATION METRICS
-    # ========================================================
+with col1:
+    if evidence["mean_bod"] is not None:
+        st.metric(
+            "Mean BOD",
+            f"{float(evidence['mean_bod']):.2f} mg/L",
+        )
 
-    st.subheader("Water Quality Evidence")
+with col2:
+    if evidence["mean_fc"] is not None:
+        st.metric(
+            "Mean Fecal Coliform",
+            f"{float(evidence['mean_fc']):.0f}",
+        )
 
-    col1, col2, col3, col4 = st.columns(4)
+with col3:
+    if evidence["persistence"] is not None:
+        st.metric(
+            "Persistence",
+            f"{float(evidence['persistence']):.2f}",
+        )
 
-    with col1:
-
-        if "mean_bod" in station.index:
-
-            st.metric(
-                "Mean BOD",
-                f"{station['mean_bod']:.2f} mg/L"
-            )
-
-    with col2:
-
-        if "mean_fc" in station.index:
-
-            st.metric(
-                "Mean Fecal Coliform",
-                f"{station['mean_fc']:.0f}"
-            )
-
-    with col3:
-
-        if "persistence" in station.index:
-
-            st.metric(
-                "Persistence",
-                f"{station['persistence']:.2f}"
-            )
-
-    with col4:
-
+with col4:
+    if evidence["hotspot_score"] is not None:
         st.metric(
             "Hotspot Score",
-            f"{hotspot[score_column]:.2f}"
+            f"{float(evidence['hotspot_score']):.2f}",
         )
-
-
-    # ========================================================
-    # 12. LOCATION
-    # ========================================================
-
-    st.subheader("📍 Location")
-
-    latitude = station.get("latitude")
-    longitude = station.get("longitude")
-
-    if pd.notna(latitude) and pd.notna(longitude):
-
-        location_df = pd.DataFrame(
-            {
-                "latitude": [latitude],
-                "longitude": [longitude]
-            }
-        )
-
-        st.map(
-            location_df,
-            latitude="latitude",
-            longitude="longitude"
-        )
-
-        st.write(
-            f"**Coordinates:** {latitude:.6f}, {longitude:.6f}"
-        )
-
-
-    # ========================================================
-    # 13. ADDITIONAL EVIDENCE
-    # ========================================================
-
-    st.subheader("📊 Station Evidence")
-
-    evidence_columns = [
-        "Station",
-        "observations",
-        "persistence",
-        "mean_bod",
-        "mean_fc",
-        "anomaly_rate"
-    ]
-
-    available_columns = [
-        column
-        for column in evidence_columns
-        if column in station.index
-    ]
-
-    evidence_df = pd.DataFrame(
-        [station[available_columns]]
-    )
-
-    st.dataframe(
-        evidence_df,
-        use_container_width=True,
-        hide_index=True
-    )
-
 
 # ============================================================
-# 14. AI DECISION SUPPORT
+# 15. LOCATION
+# ============================================================
+
+if (
+    evidence["latitude"] is not None
+    and evidence["longitude"] is not None
+):
+    st.subheader("🗺️ Station Location")
+
+    location_df = pd.DataFrame(
+        {
+            "latitude": [float(evidence["latitude"])],
+            "longitude": [float(evidence["longitude"])],
+        }
+    )
+
+    st.map(location_df)
+
+    st.caption(
+        f"Coordinates: "
+        f"{float(evidence['latitude']):.6f}, "
+        f"{float(evidence['longitude']):.6f}"
+    )
+
+# ============================================================
+# 16. DETAILED EVIDENCE TABLE
+# ============================================================
+
+st.subheader("📊 Detailed Station Evidence")
+
+evidence_table = pd.DataFrame(
+    [
+        {
+            "Station": evidence["station"],
+            "Observations": evidence["observations"],
+            "Persistence": evidence["persistence"],
+            "Mean BOD": evidence["mean_bod"],
+            "Max BOD": evidence["max_bod"],
+            "Mean Fecal Coliform": evidence["mean_fc"],
+            "Max Fecal Coliform": evidence["max_fc"],
+            "Anomaly Rate": evidence["anomaly_rate"],
+            "Hotspot Score": evidence["hotspot_score"],
+            "Hotspot Rank": evidence["hotspot_rank"],
+        }
+    ]
+)
+
+st.dataframe(
+    evidence_table,
+    use_container_width=True,
+    hide_index=True,
+)
+
+# ============================================================
+# 17. AI DECISION SUPPORT
 # ============================================================
 
 st.divider()
-
 st.header("🤖 AI Decision Support")
 
-st.write(
-    "Ask a question about the selected station. "
-    "The final version will connect this interface to "
-    "IBM Granite + RAG."
-)
+if IBM_GRANITE_READY:
+    st.success(
+        f"IBM Granite configured: {GRANITE_MODEL_ID}"
+    )
+else:
+    st.info(
+        "IBM Granite credentials are not configured yet. "
+        "The dashboard and retrieval layer can still be inspected."
+    )
 
 question = st.text_area(
-    "Your question",
+    "Ask a question about this station",
     placeholder=(
-        "Example: Why is this station considered "
-        "a potential pollution hotspot?"
+        "Example: Why is this station considered a "
+        "potential pollution hotspot?"
     ),
-    height=100
+    height=100,
 )
 
-
-# ============================================================
-# 15. CURRENT PROTOTYPE RESPONSE
-# ============================================================
-
-if st.button("Generate Decision Support", type="primary"):
-
+if st.button(
+    "Generate Decision Support",
+    type="primary",
+):
     if not question.strip():
-
         st.warning("Please enter a question.")
-
     else:
+        retrieval_query = (
+            f"{question} "
+            f"{selected_station} "
+            "water quality BOD fecal coliform "
+            "hotspot monitoring"
+        )
 
-        st.subheader("💡 Decision-Support Response")
+        retrieved_docs = retrieve_knowledge(
+            retrieval_query,
+            top_k=3,
+        )
 
-        # ----------------------------------------------------
-        # Try existing prototype response
-        # ----------------------------------------------------
+        prompt = build_grounded_prompt(
+            evidence,
+            question,
+            retrieved_docs,
+        )
 
-        response_text = None
+        answer = generate_granite_response(prompt)
 
-        if isinstance(prototype_response, dict):
+        if answer:
+            st.subheader("💡 IBM Granite Response")
+            st.write(answer)
 
-            possible_keys = [
-                "response",
-                "answer",
-                "generated_response",
-                "explanation"
-            ]
-
-            for key in possible_keys:
-
-                if key in prototype_response:
-
-                    response_text = prototype_response[key]
-                    break
-
-
-        # ----------------------------------------------------
-        # Fallback response using verified project evidence
-        # ----------------------------------------------------
-
-        if not response_text:
-
-            selected_score = float(
-                hotspot[score_column]
+        elif not IBM_GRANITE_READY:
+            st.warning(
+                "Granite is not configured. "
+                "The retrieved evidence is shown below."
             )
 
-            mean_bod = station.get("mean_bod")
-            mean_fc = station.get("mean_fc")
-            persistence = station.get("persistence")
+        if retrieved_docs:
+            st.subheader("📚 Retrieved Evidence")
 
-            response_text = (
-                f"{selected_station} has a hotspot score of "
-                f"{selected_score:.2f} in the project's baseline "
-                f"hotspot analysis. "
+            for doc in retrieved_docs:
+                with st.expander(
+                    f"{doc['source']} | "
+                    f"chunk {doc['chunk_id']} | "
+                    f"score {doc['score']:.3f}"
+                ):
+                    st.write(doc["text"])
+        else:
+            st.warning(
+                "No knowledge-base documents were retrieved. "
+                "Add verified .txt or .md references to "
+                "data/knowledge_base/."
             )
-
-            if pd.notna(mean_bod):
-
-                response_text += (
-                    f"The recorded mean BOD is approximately "
-                    f"{mean_bod:.2f} mg/L. "
-                )
-
-            if pd.notna(mean_fc):
-
-                response_text += (
-                    f"The recorded mean fecal coliform level is "
-                    f"approximately {mean_fc:.0f} MPN/100mL. "
-                )
-
-            if pd.notna(persistence):
-
-                response_text += (
-                    f"The station's persistence value is "
-                    f"{persistence:.2f}. "
-                )
-
-            response_text += (
-                "These values provide evidence for prioritizing "
-                "this station for further investigation. "
-                "They should not be interpreted as an official "
-                "regulatory determination."
-            )
-
-
-        st.write(response_text)
-
 
 # ============================================================
-# 16. RESPONSIBLE AI NOTICE
+# 18. RESPONSIBLE AI
 # ============================================================
 
 st.divider()
 
-with st.expander("⚠️ Responsible AI & Limitations"):
-
-    st.write(
+with st.expander("⚠️ Responsible AI & Project Limitations"):
+    st.markdown(
         """
-        **Important limitations**
-
-        - The analysis is based on the project's available dataset.
-        - Hotspot scores are decision-support indicators, not official
-          regulatory classifications.
-        - AI-generated explanations should remain grounded in verified
-          project evidence.
-        - The system should not invent measurements or unsupported causes.
-        - Additional field investigation may be required before taking
-          regulatory or operational action.
+        - Measurements are taken from the project dataset.
+        - Hotspot scores come from the deterministic hotspot analysis.
+        - The hotspot score is a decision-support indicator, not an
+          official regulatory determination.
+        - The Logistic Regression target is rule-derived and should not
+          be treated as independent scientific ground truth.
+        - The system does not establish causation or identify responsible
+          parties.
+        - AI explanations must remain grounded in supplied evidence.
+        - Retrieved sources are displayed for transparency.
+        - Important decisions should be supported by appropriate
+          environmental/field investigation.
+        - API keys must never be committed to Git.
         """
     )
 
-
-# ============================================================
-# 17. FOOTER
-# ============================================================
-
-st.divider()
-
 st.caption(
-    "CleanGanga-Prayagraj | AI-assisted water-quality "
-    "decision support | Prototype"
+    "CleanGanga-Prayagraj | IBM Granite + RAG | Streamlit Prototype"
 )

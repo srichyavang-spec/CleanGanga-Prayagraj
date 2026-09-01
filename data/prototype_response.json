@@ -1,0 +1,23 @@
+{
+  "status": "granite_not_connected",
+  "station": "GANGA AT ALLAHABAD (RASOOLABAD) U.P.",
+  "decision": {
+    "station": "GANGA AT ALLAHABAD (RASOOLABAD) U.P.",
+    "metrics": {
+      "persistence": 1.0,
+      "anomaly_rate": 0.0434782608695652,
+      "observations": "23",
+      "mean_bod": 2.734782608695652,
+      "max_bod": 2.9,
+      "mean_fc": 1003.9130434782608,
+      "max_fc": 1400.0
+    },
+    "hotspot_score": null,
+    "hotspot_rank": null,
+    "ml_prediction": null,
+    "ml_probability": null
+  },
+  "retrieved_sources": [],
+  "prompt": "You are an environmental decision-support assistant for CleanGanga-Prayagraj.\n\nUSER QUESTION:\nSummarize the evidence for this station.\n\nPROJECT-COMPUTED EVIDENCE:\nStation: GANGA AT ALLAHABAD (RASOOLABAD) U.P.\nHotspot score: None\nHotspot rank: None\nML prediction: None\nML probability: None\nMetrics:\n- persistence: 1.0\n- anomaly_rate: 0.0434782608695652\n- observations: 23\n- mean_bod: 2.734782608695652\n- max_bod: 2.9\n- mean_fc: 1003.9130434782608\n- max_fc: 1400.0\n\nRETRIEVED REFERENCE EVIDENCE:\nNo external reference was retrieved.\n\nINSTRUCTIONS:\n1. Answer the user's question using only the supplied evidence.\n2. Clearly distinguish project-computed evidence from reference information.\n3. Mention retrieved sources when using their information.\n4. Do not invent measurements.\n5. Do not claim causation or identify a pollution source without evidence.\n6. Do not describe the hotspot score as an official regulatory classification.\n7. Communicate uncertainty where relevant.\n8. If the evidence is insufficient, say so.\n\nProvide a concise decision-support explanation.",
+  "answer": null
+}
