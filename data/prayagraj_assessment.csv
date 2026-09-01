@@ -1,0 +1,108 @@
+SlNo,Station,Agency,State LGD Code,State,District LGD Code,District,Tehsil,Block,Village,River,Basin,Tributary,Subtributary,SubSubtributary,Local River,Latitude,Longitude,Data Acquisition Time,Biochemical Oxygen Demand (mg/L),Fecal Coliform (MPN/100mL),BOD_exceeds,FC_above_desirable,FC_exceeds_maximum,Pollution_Level
+86,GANGA AT ALLAHABAD D/S (SANGAM) U.P.,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.419206,81.900522,04-01-2021 08:30,2.0,790.0,False,True,False,Moderate Pollution
+87,GANGA AT ALLAHABAD D/S (SANGAM) U.P.,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.419206,81.900522,21-01-2021 08:30,2.6,1300.0,False,True,False,Moderate Pollution
+88,GANGA AT ALLAHABAD D/S (SANGAM) U.P.,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.419206,81.900522,18-02-2021 08:30,2.6,930.0,False,True,False,Moderate Pollution
+89,GANGA AT ALLAHABAD D/S (SANGAM) U.P.,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.419206,81.900522,28-02-2021 08:30,2.5,1100.0,False,True,False,Moderate Pollution
+90,GANGA AT ALLAHABAD D/S (SANGAM) U.P.,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.419206,81.900522,07-03-2021 08:30,2.7,1200.0,False,True,False,Moderate Pollution
+91,GANGA AT ALLAHABAD D/S (SANGAM) U.P.,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.419206,81.900522,21-03-2021 08:30,2.8,1400.0,False,True,False,Moderate Pollution
+92,GANGA AT ALLAHABAD D/S (SANGAM) U.P.,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.419206,81.900522,08-04-2021 08:30,2.7,1300.0,False,True,False,Moderate Pollution
+93,GANGA AT ALLAHABAD D/S (SANGAM) U.P.,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.419206,81.900522,27-04-2021 08:30,2.7,1100.0,False,True,False,Moderate Pollution
+94,GANGA AT ALLAHABAD D/S (SANGAM) U.P.,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.419206,81.900522,10-05-2021 08:30,2.6,1200.0,False,True,False,Moderate Pollution
+95,GANGA AT ALLAHABAD D/S (SANGAM) U.P.,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.419206,81.900522,29-05-2021 08:30,2.8,1200.0,False,True,False,Moderate Pollution
+96,GANGA AT ALLAHABAD D/S (SANGAM) U.P.,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.419206,81.900522,15-06-2021 08:30,2.8,930.0,False,True,False,Moderate Pollution
+97,GANGA AT ALLAHABAD D/S (SANGAM) U.P.,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.419206,81.900522,29-06-2021 08:30,2.9,1200.0,False,True,False,Moderate Pollution
+98,GANGA AT ALLAHABAD D/S (SANGAM) U.P.,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.419206,81.900522,15-07-2021 08:30,2.7,920.0,False,True,False,Moderate Pollution
+99,GANGA AT ALLAHABAD D/S (SANGAM) U.P.,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.419206,81.900522,30-07-2021 08:30,2.6,930.0,False,True,False,Moderate Pollution
+100,GANGA AT ALLAHABAD D/S (SANGAM) U.P.,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.419206,81.900522,16-08-2021 08:30,2.8,1000.0,False,True,False,Moderate Pollution
+101,GANGA AT ALLAHABAD D/S (SANGAM) U.P.,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.419206,81.900522,30-08-2021 08:30,2.7,830.0,False,True,False,Moderate Pollution
+102,GANGA AT ALLAHABAD D/S (SANGAM) U.P.,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.419206,81.900522,12-09-2021 08:30,2.6,820.0,False,True,False,Moderate Pollution
+103,GANGA AT ALLAHABAD D/S (SANGAM) U.P.,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.419206,81.900522,30-09-2021 08:30,2.6,780.0,False,True,False,Moderate Pollution
+104,GANGA AT ALLAHABAD D/S (SANGAM) U.P.,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.419206,81.900522,15-10-2021 08:30,2.8,920.0,False,True,False,Moderate Pollution
+105,GANGA AT ALLAHABAD D/S (SANGAM) U.P.,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.419206,81.900522,31-10-2021 08:30,2.8,1100.0,False,True,False,Moderate Pollution
+106,GANGA AT ALLAHABAD D/S (SANGAM) U.P.,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.419206,81.900522,18-11-2021 08:30,2.7,680.0,False,True,False,Moderate Pollution
+107,GANGA AT ALLAHABAD D/S (SANGAM) U.P.,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.419206,81.900522,28-11-2021 08:30,2.7,810.0,False,True,False,Moderate Pollution
+108,GANGA AT ALLAHABAD D/S (SANGAM) U.P.,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.419206,81.900522,12-12-2021 08:30,2.6,830.0,False,True,False,Moderate Pollution
+110,GANGA AT ALLAHABAD (RASOOLABAD) U.P.,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.502474,81.855439,04-01-2021 08:30,2.4,1100.0,False,True,False,Moderate Pollution
+111,GANGA AT ALLAHABAD (RASOOLABAD) U.P.,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.502474,81.855439,21-01-2021 08:30,2.5,1100.0,False,True,False,Moderate Pollution
+112,GANGA AT ALLAHABAD (RASOOLABAD) U.P.,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.502474,81.855439,18-02-2021 08:30,2.8,1200.0,False,True,False,Moderate Pollution
+113,GANGA AT ALLAHABAD (RASOOLABAD) U.P.,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.502474,81.855439,28-02-2021 08:30,2.8,1300.0,False,True,False,Moderate Pollution
+114,GANGA AT ALLAHABAD (RASOOLABAD) U.P.,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.502474,81.855439,07-03-2021 08:30,2.7,1100.0,False,True,False,Moderate Pollution
+115,GANGA AT ALLAHABAD (RASOOLABAD) U.P.,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.502474,81.855439,21-03-2021 08:30,2.7,1200.0,False,True,False,Moderate Pollution
+116,GANGA AT ALLAHABAD (RASOOLABAD) U.P.,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.502474,81.855439,08-04-2021 08:30,2.8,1100.0,False,True,False,Moderate Pollution
+117,GANGA AT ALLAHABAD (RASOOLABAD) U.P.,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.502474,81.855439,27-04-2021 08:30,2.9,780.0,False,True,False,Moderate Pollution
+118,GANGA AT ALLAHABAD (RASOOLABAD) U.P.,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.502474,81.855439,10-05-2021 08:30,2.8,1200.0,False,True,False,Moderate Pollution
+119,GANGA AT ALLAHABAD (RASOOLABAD) U.P.,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.502474,81.855439,31-05-2021 08:30,2.9,1400.0,False,True,False,Moderate Pollution
+120,GANGA AT ALLAHABAD (RASOOLABAD) U.P.,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.502474,81.855439,15-06-2021 08:30,2.7,1100.0,False,True,False,Moderate Pollution
+121,GANGA AT ALLAHABAD (RASOOLABAD) U.P.,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.502474,81.855439,29-06-2021 08:30,2.8,1400.0,False,True,False,Moderate Pollution
+122,GANGA AT ALLAHABAD (RASOOLABAD) U.P.,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.502474,81.855439,15-07-2021 08:30,2.8,920.0,False,True,False,Moderate Pollution
+123,GANGA AT ALLAHABAD (RASOOLABAD) U.P.,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.502474,81.855439,30-07-2021 08:30,2.7,930.0,False,True,False,Moderate Pollution
+124,GANGA AT ALLAHABAD (RASOOLABAD) U.P.,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.502474,81.855439,16-08-2021 08:30,2.7,930.0,False,True,False,Moderate Pollution
+125,GANGA AT ALLAHABAD (RASOOLABAD) U.P.,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.502474,81.855439,30-08-2021 08:30,2.8,910.0,False,True,False,Moderate Pollution
+126,GANGA AT ALLAHABAD (RASOOLABAD) U.P.,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.502474,81.855439,12-09-2021 08:30,2.8,910.0,False,True,False,Moderate Pollution
+127,GANGA AT ALLAHABAD (RASOOLABAD) U.P.,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.502474,81.855439,30-09-2021 08:30,2.7,810.0,False,True,False,Moderate Pollution
+128,GANGA AT ALLAHABAD (RASOOLABAD) U.P.,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.502474,81.855439,15-10-2021 08:30,2.6,810.0,False,True,False,Moderate Pollution
+129,GANGA AT ALLAHABAD (RASOOLABAD) U.P.,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.502474,81.855439,31-10-2021 08:30,2.6,780.0,False,True,False,Moderate Pollution
+130,GANGA AT ALLAHABAD (RASOOLABAD) U.P.,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.502474,81.855439,15-11-2021 08:30,2.8,820.0,False,True,False,Moderate Pollution
+131,GANGA AT ALLAHABAD (RASOOLABAD) U.P.,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.502474,81.855439,18-11-2021 08:30,2.8,610.0,False,True,False,Moderate Pollution
+132,GANGA AT ALLAHABAD (RASOOLABAD) U.P.,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.502474,81.855439,28-12-2021 08:30,2.8,680.0,False,True,False,Moderate Pollution
+208,GANGA AT KADAGHAT ALLAHABAD,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.443124,81.887148,04-01-2021 08:30,2.0,1300.0,False,True,False,Moderate Pollution
+209,GANGA AT KADAGHAT ALLAHABAD,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.443124,81.887148,21-01-2021 08:30,2.7,1000.0,False,True,False,Moderate Pollution
+210,GANGA AT KADAGHAT ALLAHABAD,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.443124,81.887148,18-02-2021 08:30,2.7,1100.0,False,True,False,Moderate Pollution
+211,GANGA AT KADAGHAT ALLAHABAD,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.443124,81.887148,28-02-2021 08:30,2.8,1400.0,False,True,False,Moderate Pollution
+212,GANGA AT KADAGHAT ALLAHABAD,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.443124,81.887148,07-03-2021 08:30,2.8,1300.0,False,True,False,Moderate Pollution
+213,GANGA AT KADAGHAT ALLAHABAD,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.443124,81.887148,21-03-2021 08:30,2.6,1300.0,False,True,False,Moderate Pollution
+214,GANGA AT KADAGHAT ALLAHABAD,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.443124,81.887148,08-04-2021 08:30,2.6,780.0,False,True,False,Moderate Pollution
+215,GANGA AT KADAGHAT ALLAHABAD,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.443124,81.887148,26-04-2021 08:30,2.7,680.0,False,True,False,Moderate Pollution
+216,GANGA AT KADAGHAT ALLAHABAD,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.443124,81.887148,10-05-2021 08:30,2.5,810.0,False,True,False,Moderate Pollution
+217,GANGA AT KADAGHAT ALLAHABAD,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.443124,81.887148,30-05-2021 08:30,2.4,1100.0,False,True,False,Moderate Pollution
+218,GANGA AT KADAGHAT ALLAHABAD,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.443124,81.887148,13-06-2021 08:30,2.8,920.0,False,True,False,Moderate Pollution
+219,GANGA AT KADAGHAT ALLAHABAD,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.443124,81.887148,27-06-2021 08:30,2.7,1200.0,False,True,False,Moderate Pollution
+220,GANGA AT KADAGHAT ALLAHABAD,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.443124,81.887148,15-07-2021 08:30,2.8,930.0,False,True,False,Moderate Pollution
+222,GANGA AT KADAGHAT ALLAHABAD,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.443124,81.887148,15-08-2021 08:30,2.6,840.0,False,True,False,Moderate Pollution
+223,GANGA AT KADAGHAT ALLAHABAD,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.443124,81.887148,30-08-2021 08:30,2.6,820.0,False,True,False,Moderate Pollution
+224,GANGA AT KADAGHAT ALLAHABAD,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.443124,81.887148,13-09-2021 08:30,2.7,910.0,False,True,False,Moderate Pollution
+225,GANGA AT KADAGHAT ALLAHABAD,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.443124,81.887148,30-09-2021 08:30,2.7,810.0,False,True,False,Moderate Pollution
+226,GANGA AT KADAGHAT ALLAHABAD,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.443124,81.887148,14-10-2021 08:30,2.7,820.0,False,True,False,Moderate Pollution
+227,GANGA AT KADAGHAT ALLAHABAD,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.443124,81.887148,31-10-2021 08:30,2.6,710.0,False,True,False,Moderate Pollution
+228,GANGA AT KADAGHAT ALLAHABAD,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.443124,81.887148,18-11-2021 08:30,2.8,780.0,False,True,False,Moderate Pollution
+229,GANGA AT KADAGHAT ALLAHABAD,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.443124,81.887148,28-11-2021 08:30,2.8,820.0,False,True,False,Moderate Pollution
+230,GANGA AT KADAGHAT ALLAHABAD,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.443124,81.887148,12-12-2021 08:30,2.9,810.0,False,True,False,Moderate Pollution
+815,RIVER GANGA A/C TAMSA RIVER SIRSA SON BARSA,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.259363,82.096478,04-01-2021 08:30,2.2,1100.0,False,True,False,Moderate Pollution
+816,RIVER GANGA A/C TAMSA RIVER SIRSA SON BARSA,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.259363,82.096478,21-01-2021 08:30,2.4,910.0,False,True,False,Moderate Pollution
+817,RIVER GANGA A/C TAMSA RIVER SIRSA SON BARSA,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.259363,82.096478,18-02-2021 08:30,2.5,810.0,False,True,False,Moderate Pollution
+818,RIVER GANGA A/C TAMSA RIVER SIRSA SON BARSA,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.259363,82.096478,28-02-2021 08:30,2.5,780.0,False,True,False,Moderate Pollution
+819,RIVER GANGA A/C TAMSA RIVER SIRSA SON BARSA,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.259363,82.096478,07-03-2021 08:30,2.7,830.0,False,True,False,Moderate Pollution
+820,RIVER GANGA A/C TAMSA RIVER SIRSA SON BARSA,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.259363,82.096478,21-03-2021 08:30,2.4,910.0,False,True,False,Moderate Pollution
+821,RIVER GANGA A/C TAMSA RIVER SIRSA SON BARSA,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.259363,82.096478,08-04-2021 08:30,2.6,680.0,False,True,False,Moderate Pollution
+822,RIVER GANGA A/C TAMSA RIVER SIRSA SON BARSA,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.259363,82.096478,26-04-2021 08:30,2.8,790.0,False,True,False,Moderate Pollution
+823,RIVER GANGA A/C TAMSA RIVER SIRSA SON BARSA,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.259363,82.096478,10-05-2021 08:30,2.6,810.0,False,True,False,Moderate Pollution
+824,RIVER GANGA A/C TAMSA RIVER SIRSA SON BARSA,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.259363,82.096478,30-05-2021 08:30,2.5,790.0,False,True,False,Moderate Pollution
+825,RIVER GANGA A/C TAMSA RIVER SIRSA SON BARSA,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.259363,82.096478,13-06-2021 08:30,2.7,820.0,False,True,False,Moderate Pollution
+826,RIVER GANGA A/C TAMSA RIVER SIRSA SON BARSA,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.259363,82.096478,27-06-2021 08:30,2.8,830.0,False,True,False,Moderate Pollution
+827,RIVER GANGA A/C TAMSA RIVER SIRSA SON BARSA,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.259363,82.096478,15-07-2021 08:30,2.7,680.0,False,True,False,Moderate Pollution
+828,RIVER GANGA A/C TAMSA RIVER SIRSA SON BARSA,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.259363,82.096478,29-07-2021 08:30,2.6,630.0,False,True,False,Moderate Pollution
+829,RIVER GANGA A/C TAMSA RIVER SIRSA SON BARSA,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.259363,82.096478,15-08-2021 08:30,2.7,700.0,False,True,False,Moderate Pollution
+830,RIVER GANGA A/C TAMSA RIVER SIRSA SON BARSA,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.259363,82.096478,30-08-2021 08:30,2.7,680.0,False,True,False,Moderate Pollution
+831,RIVER GANGA A/C TAMSA RIVER SIRSA SON BARSA,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.259363,82.096478,13-09-2021 08:30,2.6,680.0,False,True,False,Moderate Pollution
+832,RIVER GANGA A/C TAMSA RIVER SIRSA SON BARSA,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.259363,82.096478,30-09-2021 08:30,2.8,920.0,False,True,False,Moderate Pollution
+833,RIVER GANGA A/C TAMSA RIVER SIRSA SON BARSA,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.259363,82.096478,14-10-2021 08:30,2.7,780.0,False,True,False,Moderate Pollution
+834,RIVER GANGA A/C TAMSA RIVER SIRSA SON BARSA,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.259363,82.096478,31-10-2021 08:30,2.6,930.0,False,True,False,Moderate Pollution
+835,RIVER GANGA A/C TAMSA RIVER SIRSA SON BARSA,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.259363,82.096478,18-11-2021 08:30,2.7,700.0,False,True,False,Moderate Pollution
+836,RIVER GANGA A/C TAMSA RIVER SIRSA SON BARSA,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.259363,82.096478,28-11-2021 08:30,2.7,780.0,False,True,False,Moderate Pollution
+837,RIVER GANGA A/C TAMSA RIVER SIRSA SON BARSA,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.259363,82.096478,12-12-2021 08:30,2.8,680.0,False,True,False,Moderate Pollution
+1269,TONS AT CHAKGHAT M.P.,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.043083,81.721004,04-01-2021 08:30,2.0,2.0,False,False,False,Low Pollution
+1270,TONS AT CHAKGHAT M.P.,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.043083,81.721004,12-04-2021 08:30,1.6,2.0,False,False,False,Low Pollution
+1272,TONS AT CHAKGHAT M.P.,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.043083,81.721004,07-06-2021 08:30,1.5,2.0,False,False,False,Low Pollution
+1274,TONS AT CHAKGHAT M.P.,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.043083,81.721004,10-08-2021 08:30,2.0,2.0,False,False,False,Low Pollution
+1275,TONS AT CHAKGHAT M.P.,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.043083,81.721004,06-09-2021 08:30,1.6,2.0,False,False,False,Low Pollution
+1294,YAMUNA AT ALLAHABAD D/S (BALUA GHAT) U.P,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.422471,81.838806,04-01-2021 08:30,1.9,780.0,False,True,False,Moderate Pollution
+1295,YAMUNA AT ALLAHABAD D/S (BALUA GHAT) U.P,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.422471,81.838806,23-03-2021 08:30,2.6,930.0,False,True,False,Moderate Pollution
+1296,YAMUNA AT ALLAHABAD D/S (BALUA GHAT) U.P,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.422471,81.838806,26-04-2021 08:30,2.5,680.0,False,True,False,Moderate Pollution
+1297,YAMUNA AT ALLAHABAD D/S (BALUA GHAT) U.P,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.422471,81.838806,24-05-2021 08:30,2.7,700.0,False,True,False,Moderate Pollution
+1298,YAMUNA AT ALLAHABAD D/S (BALUA GHAT) U.P,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.422471,81.838806,15-06-2021 08:30,2.7,490.0,False,False,False,Low Pollution
+1299,YAMUNA AT ALLAHABAD D/S (BALUA GHAT) U.P,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.422471,81.838806,13-07-2021 08:30,2.5,610.0,False,True,False,Moderate Pollution
+1300,YAMUNA AT ALLAHABAD D/S (BALUA GHAT) U.P,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.422471,81.838806,16-08-2021 08:30,2.6,680.0,False,True,False,Moderate Pollution
+1301,YAMUNA AT ALLAHABAD D/S (BALUA GHAT) U.P,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.422471,81.838806,14-09-2021 08:30,2.5,600.0,False,True,False,Moderate Pollution
+1302,YAMUNA AT ALLAHABAD D/S (BALUA GHAT) U.P,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.422471,81.838806,28-10-2021 08:30,2.6,680.0,False,True,False,Moderate Pollution
+1303,YAMUNA AT ALLAHABAD D/S (BALUA GHAT) U.P,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.422471,81.838806,29-11-2021 08:30,2.7,450.0,False,False,False,Low Pollution
+1304,YAMUNA AT ALLAHABAD D/S (BALUA GHAT) U.P,CPCB,9,Uttar Pradesh,120,Allahabad,Allahabad,-,-,-,-,-,-,-,-,25.422471,81.838806,20-12-2021 08:30,2.7,600.0,False,True,False,Moderate Pollution
